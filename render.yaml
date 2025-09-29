@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: pokebot-receiver
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn webhook_receiver_sendgrid:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: ADMIN_USER
+        sync: false
+      - key: ADMIN_PASS
+        sync: false
+      - key: DECISIONS_DIR
+        value: decisions
+      - key: PURCHASES_DIR
+        value: purchases
+      - key: LOGS_DIR
+        value: logs
